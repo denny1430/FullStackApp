@@ -1,13 +1,13 @@
 pipeline {
     agent any
 
-    environment {
-        DOTNET_ROOT = "/usr/share/dotnet"
+    tools {
+        nodejs "NodeJS_18"        // ✅ This is allowed (after setting it in Global Tools)
     }
 
-    tools {
-        nodejs "NodeJS_18"        // Must match the Jenkins NodeJS tool name
-        dotnet "DotNet_6"         // Must match the Jenkins .NET tool name
+    environment {
+        DOTNET_ROOT = "/usr/share/dotnet"
+        PATH = "${DOTNET_ROOT}:${PATH}"
     }
 
     stages {
