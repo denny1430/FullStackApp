@@ -1,13 +1,13 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs "NodeJS_18"        // ✅ This is allowed (after setting it in Global Tools)
+    environment {
+        DOTNET_ROOT = "C:\\Program Files\\dotnet"
     }
 
-    environment {
-        DOTNET_ROOT = "/usr/share/dotnet"
-        PATH = "${DOTNET_ROOT}:${PATH}"
+    tools {
+        nodejs "NodeJS_18"
+        dotnet "DotNet_6"
     }
 
     stages {
@@ -20,7 +20,7 @@ pipeline {
         stage('Install React Dependencies') {
             steps {
                 dir('client') {
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
@@ -28,7 +28,7 @@ pipeline {
         stage('Build React App') {
             steps {
                 dir('client') {
-                    sh 'npm run build'
+                    bat 'npm run build'
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
         stage('Build .NET Web API') {
             steps {
                 dir('server') {
-                    sh 'dotnet build --configuration Release'
+                    bat 'dotnet build --configuration Release'
                 }
             }
         }
@@ -44,14 +44,14 @@ pipeline {
         stage('Run Tests (Optional)') {
             steps {
                 dir('server') {
-                    sh 'dotnet test'
+                    bat 'dotnet test'
                 }
             }
         }
 
         stage('Archive Build Artifacts') {
             steps {
-                archiveArtifacts artifacts: 'client/build/**, server/bin/**', fingerprint: true
+                archiveArtifacts artifacts: 'client\\build\\**/*, server\\bin\\**/*', fingerprint: true
             }
         }
     }
