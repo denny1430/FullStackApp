@@ -6,8 +6,8 @@ pipeline {
     }
 
     tools {
-        nodejs "NodeJS_18"
-        dotnet "DotNet_6"
+        nodejs "NodeJS_18"  // Make sure this matches what you configured in Jenkins > Global Tool Configuration
+        // dotnet is removed here
     }
 
     stages {
