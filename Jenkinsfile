@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/denny1430/FullStackApp.git', branch: 'main'
+                git url: 'https://github.com/denny1430/FullStackApp.git', branch: 'master'
             }
         }
 
